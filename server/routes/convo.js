@@ -20,9 +20,7 @@ const globalHistory = []
 
 router.get(`/getuserconvos`, fetchU, async(req, res) => {
   try{
-    const data = userConvo.find({userId: req.body.id})
-    console.log(`test`)
-    console.log(data)
+    const data = await userConvo.find({userId: req.user.id})
     res.json(data)
   }catch(error){
     res.status(500).send(`Internal Server Error`)
@@ -44,14 +42,14 @@ router.post("/chatwithuser", async(req, res) => {
     prompt: prompt,
   });
   globalHistory.push([prompt, completion.data.choices[0].text])
-  console.log(completion.data.choices[0].text)
+  //console.log(completion.data.choices[0].text)
   res.send(completion.data.choices[0].text);
 });
 
-router.post("/saveuserchat/:id", async(req, res) => {
+router.post("/saveuserchat", fetchU, async(req, res) => {
   const taskDone = await userConvo.create(
     {
-      userId: req.params.id,
+      userId: req.user.id,
       conversation: globalHistory,
     }
   )

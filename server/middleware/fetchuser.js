@@ -1,7 +1,7 @@
 const jwt = require(`jsonwebtoken`)
 const JWT_SECRET = "testingSomethingAwesome"
 
-const fetchU = async(req, res) => {
+const fetchU = (req, res, next) => {
     try{
         const token = req.header(`authtoken`)
 
@@ -11,7 +11,8 @@ const fetchU = async(req, res) => {
         }else{
             try{
                 const data = jwt.verify(token, JWT_SECRET)
-                res.json(data.user)
+                req.user = data.user
+                next()
             }catch(error){
                 res.status(401).send(`Faulty Authentication`)
             }
