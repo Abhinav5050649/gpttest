@@ -8,7 +8,6 @@ const JWT_SECRET = `testingSomethingAwesome`;
 
 //defined routes and Tested. All routes working fine!!!
 
-//Removed fetchUser in login and createuser because of errors. Need to check
 router.post(`/createuser`, 
 [
     body("email").isEmail(),
@@ -90,16 +89,5 @@ router.post(`/login`,
         }
     }
 )
-
-// router.post(`/getuser`, fetchUser, async(req, res) => {
-//     try{
-//         userId = req.user.id;
-//         const user = await User.findById(userId).select(`-password`);
-//         res.send(user);
-//     }   catch (error)   {
-//         console.error(error);
-//         res.status(500).send(`Internal Server Error!!!`);
-//     }
-// })
 
 module.exports = router;
