@@ -27,7 +27,7 @@ router.get(`/getuserconvos`, fetchU, async(req, res) => {
   }
 })
 
-router.post("/chatwithuser", async(req, res) => {
+router.post("/chat", async(req, res) => {
   // Get the prompt from the request
   const { prompt } = req.body;
 
@@ -41,9 +41,9 @@ router.post("/chatwithuser", async(req, res) => {
     model: "text-davinci-002",
     prompt: prompt,
   });
-  globalHistory.push([prompt, completion.data.choices[0].text])
+  globalHistory.push([prompt, completion.data.choices[0].message])
   //console.log(completion.data.choices[0].text)
-  res.send(completion.data.choices[0].text);
+  res.send(completion.data.choices[0].message);
 });
 
 router.post("/saveuserchat", fetchU, async(req, res) => {
